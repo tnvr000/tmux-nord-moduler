@@ -4,25 +4,20 @@
 MODULES_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )/.." && pwd )/modules"
 
 get_module_tag() {
+  # Strip invisible whitespace/carriage returns just to be safe
   local module_name=$(echo "$1" | tr -d '\r\n[:space:]')
+  
+  # 1. Dynamic Variable Indirection (The Clean Way!)
+  local var_name="NORD_NATIVE_${module_name}"
+  local native_format="${!var_name}"
+  
+  # If it finds the native variable, return it instantly
+  if [[ -n "$native_format" ]]; then
+    echo "$native_format"
+    return
+  fi
 
-  # 1. HARDCODED NATIVE VARIABLES
-  case "$module_name" in
-    directory)
-      echo "  #{b:pane_current_path}"
-      return
-      ;;
-    session)
-      echo " #S"
-      return
-      ;;
-    window)
-      echo " #W"
-      return
-      ;;
-  esac
-
-  # 2. BASH SCRIPT FALLBACK
+  # 2. Bash Script Fallback
   local module_script="${MODULES_DIR}/${module_name}.sh"
 
   if [[ ! -f "$module_script" ]]; then
