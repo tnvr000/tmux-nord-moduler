@@ -1,5 +1,4 @@
 #!/usr/bin/env bash
-# modules/battery.sh
 
 get_battery_wsl() {
   # We use wmic via cmd.exe because it is significantly faster than calling powershell.exe from WSL
@@ -33,34 +32,16 @@ main() {
       
   # 3. Check for WSL (Ubuntu 22)
   elif grep -qi microsoft /proc/version; then
-      local wsl_bat=$(get_battery_wsl)
-      capacity=$(echo "$wsl_bat" | awk '{print $1}')
-      status=$(echo "$wsl_bat" | awk '{print $2}')
+      read -r capacity status <<< "$(get_battery_wsl)"
   fi
 
   # Fallback if no battery is detected (e.g., on a desktop)
   if [[ -z "$capacity" ]]; then
-      echo "󰂑 ---%"
-      return
-  fi
-
-  # Determine the correct Nerd Font icon
-  local icon="󰁹" # Default full
-  
-  if [[ "$status" == *"Charging"* ]] || [[ "$status" == *"charging"* ]]; then
-      icon="󰂄"
-  else
-      if [[ $capacity -le 20 ]]; then
-          icon="󰂎"
-      elif [[ $capacity -le 50 ]]; then
-          icon="󰁾"
-      elif [[ $capacity -le 80 ]]; then
-          icon="󰂀"
-      fi
+    return
   fi
 
   # Output the final string to tmux
-  echo "${icon} ${capacity}%"
+  echo "$capacity $status"
 }
 
 main
