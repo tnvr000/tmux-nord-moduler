@@ -30,6 +30,6 @@ get_module_tag() {
   if [[ ! -f "$module_script" ]]; then
     echo "[${module_name}?]"
   else
-    echo "#(bash \"$module_script\")"
+    echo "#(bash \"$SCRIPTS_DIR/dispatcher.sh\" \"$module_name\")"
   fi
 }

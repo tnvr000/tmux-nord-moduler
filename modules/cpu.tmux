@@ -1,7 +1,7 @@
 module_cpu() {
     local cpu
 
-    cpu="$("$CURRENT_DIR/scripts/cpu.sh")"
+    cpu="$("$SCRIPTS_DIR/cpu.sh")"
 
     echo "$cpu"
 }
