@@ -1,7 +1,10 @@
 #!/usr/bin/env bash
 # lib/helpers.tmux
 
-MODULES_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )/.." && pwd )/modules"
+PLUGIN_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )/.." && pwd )"
+
+MODULES_DIR="${PLUGIN_DIR}/modules"
+SCRIPTS_DIR="${PLUGIN_DIR}/scripts"
 
 get_module_tag() {
   # Strip invisible whitespace/carriage returns just to be safe
@@ -19,6 +22,10 @@ get_module_tag() {
 
   # 2. Bash Script Fallback
   local module_script="${MODULES_DIR}/${module_name}.sh"
+
+  if [[ -f "$SCRIPTS_DIR/${module_name}.sh" ]]; then
+      module_script="$SCRIPTS_DIR/${module_name}.sh"
+  fi
 
   if [[ ! -f "$module_script" ]]; then
     echo "[${module_name}?]"
