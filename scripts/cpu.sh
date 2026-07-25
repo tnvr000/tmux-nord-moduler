@@ -48,15 +48,15 @@ main() {
 
   # 3. Final Fallback if everything fails
   if [[ -z "$cpu_usage" ]]; then
-     echo "  --%"
+     echo "--"
      return
   fi
 
   # 4. Render with padding for single digits to prevent the bar from shifting
   if [[ $cpu_usage -lt 10 ]]; then
-    echo "  ${cpu_usage}%"
+    echo "${cpu_usage}"
   else
-    echo "  ${cpu_usage}%"
+    echo "${cpu_usage}"
   fi
 }
 
