@@ -1,2 +1,2 @@
 #!/usr/bin/env bash
-date "+%H:%M"
+date "+%H:%M:%S"
