@@ -1,5 +1,4 @@
 #!/usr/bin/env bash
-# modules/git.sh
 
 main() {
   # 1. Ask Tmux for the current path of the active pane

@@ -1,5 +1,4 @@
 #!/usr/bin/env bash
-# modules/cpu.sh
 
 CACHE_FILE="/tmp/tmux_nord_cpu_stat"
 
@@ -48,8 +47,8 @@ main() {
 
   # 3. Final Fallback if everything fails
   if [[ -z "$cpu_usage" ]]; then
-     echo "--"
-     return
+    echo "--"
+    return
   fi
 
   # 4. Render with padding for single digits to prevent the bar from shifting

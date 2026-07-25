@@ -1,7 +1,5 @@
+#!/usr/bin/env bash
+
 module_cpu() {
-    local cpu
-
-    cpu="$("$SCRIPTS_DIR/cpu.sh")"
-
-    echo "  $cpu%"
+  echo "  $("$SCRIPTS_DIR/cpu.sh")%"
 }

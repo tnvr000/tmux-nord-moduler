@@ -1,5 +1,4 @@
 #!/usr/bin/env bash
-# modules/ram.sh
 
 get_ram_wsl() {
   # Ask Windows for physical host memory (returned in Kilobytes)
@@ -43,8 +42,8 @@ main() {
 
   # 3. Final Fallback if everything fails
   if [[ -z "$ram_usage" ]]; then
-     echo "--%"
-     return
+    echo "--%"
+    return
   fi
 
   # 4. Render with padding for single digits to prevent the bar from shifting

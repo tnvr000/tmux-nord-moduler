@@ -8,11 +8,11 @@ get_battery_wsl() {
   # Win32_Battery BatteryStatus: 2 = AC/Charging, 1 = Discharging
   local status="Discharging"
   if [[ "$status_code" == "2" ]]; then
-      status="Charging"
+    status="Charging"
   fi
   
   if [[ -n "$capacity" ]]; then
-      echo "$capacity $status"
+    echo "$capacity $status"
   fi
 }
 
@@ -22,22 +22,22 @@ main() {
 
   # 1. Check for standard Linux
   if [[ -f /sys/class/power_supply/BAT0/capacity ]]; then
-      capacity=$(cat /sys/class/power_supply/BAT0/capacity)
-      status=$(cat /sys/class/power_supply/BAT0/status)
-      
+    capacity=$(cat /sys/class/power_supply/BAT0/capacity)
+    status=$(cat /sys/class/power_supply/BAT0/status)
+    
   # 2. Check for macOS
   elif command -v pmset >/dev/null 2>&1; then
-      capacity=$(pmset -g batt | grep -o '[0-9]\{1,3\}%' | tr -d '%')
-      status=$(pmset -g batt | grep -o 'charging\|discharging')
-      
+    capacity=$(pmset -g batt | grep -o '[0-9]\{1,3\}%' | tr -d '%')
+    status=$(pmset -g batt | grep -o 'charging\|discharging')
+    
   # 3. Check for WSL (Ubuntu 22)
   elif grep -qi microsoft /proc/version; then
-      read -r capacity status <<< "$(get_battery_wsl)"
+    read -r capacity status <<< "$(get_battery_wsl)"
   fi
 
   # Fallback if no battery is detected (e.g., on a desktop)
   if [[ -z "$capacity" ]]; then
-    return
+  return
   fi
 
   # Output the final string to tmux
