@@ -93,6 +93,25 @@ run-shell 'export NORD_NATIVE_user=" #(whoami)"'
 set -g @nord_mod_right "user directory git"
 ```
 
+## 🛠️ Extension: Module Contract
+
+scripts/\<name>.sh
+-----------------
+- Collect data only.
+- Return plain text.
+- No icons.
+- No colors.
+- No tmux formatting.
+- Return empty output if there is nothing to display.
+
+modules/\<name>.tmux
+-------------------
+- Source the corresponding script.
+- Decide whether to display.
+- Add icons.
+- Format the output.
+- Never collect system information directly.
+
 ## 📝 Requirements
 * Tmux 2.9 or higher.
 * A patched [Nerd Font](https://www.nerdfonts.com/) for icons to render correctly.
