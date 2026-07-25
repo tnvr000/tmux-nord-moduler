@@ -10,7 +10,7 @@ main() {
 
   # 3. Check if we are inside a Git repository
   if ! git rev-parse --is-inside-work-tree >/dev/null 2>&1; then
-    echo "  --"
+    echo "--"
     return
   fi
 
@@ -32,7 +32,7 @@ main() {
   fi
 
   # Output the final string (e.g., main, main*, main+, or main+*)
-  echo "  ${branch}${staged}${dirty}"
+  echo "${branch}${staged}${dirty}"
 }
 
 main
