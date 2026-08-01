@@ -1,5 +1,10 @@
 #!/usr/bin/env bash
 
 module_git() {
-  echo "  $("$SCRIPTS_DIR/git.sh")"
+  local git
+
+  git="$("$SCRIPTS_DIR/git.sh")"
+  [[ -z "$git" ]] && return
+
+  echo "  $git"
 }

@@ -42,15 +42,15 @@ main() {
 
   # 3. Final Fallback if everything fails
   if [[ -z "$ram_usage" ]]; then
-    echo "--%"
+    echo "--"
     return
   fi
 
   # 4. Render with padding for single digits to prevent the bar from shifting
   if [[ $ram_usage -lt 10 ]]; then
-    echo " ${ram_usage}%"
+    echo " ${ram_usage}"
   else
-    echo "${ram_usage}%"
+    echo "${ram_usage}"
   fi
 }
 

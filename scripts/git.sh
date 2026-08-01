@@ -9,7 +9,7 @@ main() {
 
   # 3. Check if we are inside a Git repository
   if ! git rev-parse --is-inside-work-tree >/dev/null 2>&1; then
-    echo "--"
+    echo ""
     return
   fi
 
