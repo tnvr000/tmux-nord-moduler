@@ -27,7 +27,7 @@ build_right_status() {
     local module="${modules_array[$i]}"
     
     # FIX: Get the dynamic tag #(...) instead of executing it statically
-    local content=$(get_module_tag "$module")
+    local content="$("$SCRIPTS_DIR/dispatcher.sh" "$module")"
 
     if [[ $i -eq 0 ]]; then
       output+=$(apply_style "$NORD_MODULE_BG" "default" "$reset" "$sep_solid")
