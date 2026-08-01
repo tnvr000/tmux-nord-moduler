@@ -18,16 +18,25 @@ build_right_status() {
   local -a modules_array=($NORD_RIGHT_MODULES)
   local total_modules=${#modules_array[@]}
   local output=""
+  local -a visible_modules=()
 
   local sep_solid=""
   local sep_thin=""
   local reset="nobold,nounderscore,noitalics"
 
-  for (( i=0; i<$total_modules; i++ )); do
-    local module="${modules_array[$i]}"
-    
-    # FIX: Get the dynamic tag #(...) instead of executing it statically
-    local content="$("$SCRIPTS_DIR/dispatcher.sh" "$module")"
+  for module in "${modules_array[@]}"; do
+    local content
+
+    content="$("$SCRIPTS_DIR/dispatcher.sh" "$module")"
+
+    [[ -z "$content" ]] && continue
+
+    visible_modules+=("$content")
+  done
+
+  local total_visible=${#visible_modules[@]}
+  for (( i=0; i<$total_visible; i++ )); do
+    local content="${visible_modules[$i]}"
 
     if [[ $i -eq 0 ]]; then
       output+=$(apply_style "$NORD_MODULE_BG" "default" "$reset" "$sep_solid")
@@ -40,7 +49,7 @@ build_right_status() {
 
   local mode_content=$(get_tmux_mode_format)
 
-  if [[ $total_modules -eq 0 ]]; then
+  if [[ $total_visible -eq 0 ]]; then
     output+=$(apply_style "$NORD_ACCENT_BG" "default" "$reset" "$sep_solid")
   else
     output+=$(apply_style "$NORD_ACCENT_BG" "$NORD_MODULE_BG" "$reset" " ${sep_solid}")
@@ -48,8 +57,7 @@ build_right_status() {
 
   output+=$(apply_style "$NORD_ACCENT_FG" "$NORD_ACCENT_BG" "bold" " ${mode_content} ")
 
-  tmux set-option -g status-right-length 150
-  tmux set-option -g status-right "$output"
+  echo "$output"
 }
 
 render_status() {

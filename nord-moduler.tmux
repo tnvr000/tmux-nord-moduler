@@ -12,8 +12,6 @@ source "$CURRENT_DIR/lib/options.tmux"
 source "$CURRENT_DIR/lib/mode.tmux"
 source "$CURRENT_DIR/lib/renderer.tmux"
 
-main() {
-  render_status
-}
-
-main
+tmux set-option -g status-interval 1
+tmux set-option -g status-right-length 150
+tmux set-option -g status-right "#($CURRENT_DIR/scripts/render_right.sh)"
