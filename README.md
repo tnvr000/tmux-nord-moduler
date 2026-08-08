@@ -112,6 +112,29 @@ modules/\<name>.tmux
 - Format the output.
 - Never collect system information directly.
 
+## Theme contract
+--------------
+
+Every theme must define:
+
+THEME_NAME
+
+THEME_BASE_BG
+
+THEME_MODULE_BG
+THEME_MODULE_FG
+
+THEME_ACCENT_BG
+THEME_ACCENT_FG
+
+THEME_MODE_FG
+THEME_MODE_NORMAL_BG
+THEME_MODE_COMMAND_BG
+THEME_MODE_COPY_BG
+THEME_MODE_OTHER_BG
+
+--------------
+
 ## 📝 Requirements
 * Tmux 2.9 or higher.
 * A patched [Nerd Font](https://www.nerdfonts.com/) for icons to render correctly.

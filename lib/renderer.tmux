@@ -39,11 +39,11 @@ build_right_status() {
     local content="${visible_modules[$i]}"
 
     if [[ $i -eq 0 ]]; then
-      output+=$(apply_style "$NORD_MODULE_BG" "default" "$reset" "$sep_solid")
-      output+=$(apply_style "$NORD_MODULE_FG" "$NORD_MODULE_BG" "" " ${content}")
+      output+=$(apply_style "$THEME_MODULE_BG" "default" "$reset" "$sep_solid")
+      output+=$(apply_style "$THEME_MODULE_FG" "$THEME_MODULE_BG" "" " ${content}")
     else
-      output+=$(apply_style "$NORD_MODULE_FG" "$NORD_MODULE_BG" "$reset" " ${sep_thin} ")
-      output+=$(apply_style "$NORD_MODULE_FG" "$NORD_MODULE_BG" "" "${content}")
+      output+=$(apply_style "$THEME_MODULE_FG" "$THEME_MODULE_BG" "$reset" " ${sep_thin} ")
+      output+=$(apply_style "$THEME_MODULE_FG" "$THEME_MODULE_BG" "" "${content}")
     fi
   done
 
@@ -53,10 +53,10 @@ build_right_status() {
   if [[ $total_visible -eq 0 ]]; then
   output+=$(apply_style "$mode_bg" "default" "$reset" "$sep_solid")
 else
-  output+=$(apply_style "$mode_bg" "$NORD_MODULE_BG" "$reset" " ${sep_solid}")
+  output+=$(apply_style "$mode_bg" "$THEME_MODULE_BG" "$reset" " ${sep_solid}")
 fi
 
-output+=$(apply_style "$NORD_MODE_FG" "$mode_bg" "bold" " ${mode_content} ")
+output+=$(apply_style "$THEME_MODE_FG" "$mode_bg" "bold" " ${mode_content} ")
 
   echo "$output"
 }

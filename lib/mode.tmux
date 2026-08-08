@@ -17,5 +17,5 @@ get_tmux_mode_color() {
   local is_buffer="#{==:#{pane_mode},buffer-mode}"
   local is_client="#{==:#{pane_mode},client-mode}"
 
-  echo "#{?client_prefix,${NORD_MODE_COMMAND_BG},#{?pane_in_mode,#{?${is_tree},${NORD_MODE_COPY_BG},#{?${is_buffer},${NORD_MODE_OTHER_BG},#{?${is_client},${NORD_MODE_OTHER_BG},${NORD_MODE_COPY_BG}}}},#{?window_zoomed_flag,${NORD_MODE_OTHER_BG},${NORD_MODE_NORMAL_BG}}}}"
+  echo "#{?client_prefix,${THEME_MODE_COMMAND_BG},#{?pane_in_mode,#{?${is_tree},${THEME_MODE_COPY_BG},#{?${is_buffer},${THEME_MODE_OTHER_BG},#{?${is_client},${THEME_MODE_OTHER_BG},${THEME_MODE_COPY_BG}}}},#{?window_zoomed_flag,${THEME_MODE_OTHER_BG},${THEME_MODE_NORMAL_BG}}}}"
 }
