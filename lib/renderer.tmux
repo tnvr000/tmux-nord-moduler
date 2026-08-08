@@ -47,15 +47,16 @@ build_right_status() {
     fi
   done
 
-  local mode_content=$(get_tmux_mode_format)
+  local mode_content="$(get_tmux_mode_format)"
+  local mode_bg="$(get_tmux_mode_color)"
 
   if [[ $total_visible -eq 0 ]]; then
-    output+=$(apply_style "$NORD_ACCENT_BG" "default" "$reset" "$sep_solid")
-  else
-    output+=$(apply_style "$NORD_ACCENT_BG" "$NORD_MODULE_BG" "$reset" " ${sep_solid}")
-  fi
+  output+=$(apply_style "$mode_bg" "default" "$reset" "$sep_solid")
+else
+  output+=$(apply_style "$mode_bg" "$NORD_MODULE_BG" "$reset" " ${sep_solid}")
+fi
 
-  output+=$(apply_style "$NORD_ACCENT_FG" "$NORD_ACCENT_BG" "bold" " ${mode_content} ")
+output+=$(apply_style "$NORD_MODE_FG" "$mode_bg" "bold" " ${mode_content} ")
 
   echo "$output"
 }
