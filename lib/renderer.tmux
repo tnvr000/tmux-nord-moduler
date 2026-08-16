@@ -51,12 +51,12 @@ build_right_status() {
   local mode_bg="$(get_tmux_mode_color)"
 
   if [[ $total_visible -eq 0 ]]; then
-  output+=$(apply_style "$mode_bg" "default" "$reset" "$sep_solid")
-else
-  output+=$(apply_style "$mode_bg" "$THEME_MODULE_BG" "$reset" " ${sep_solid}")
-fi
+    output+=$(apply_style "$mode_bg" "$THEME_STATUS_BG" "$reset" " $sep_solid")
+  else
+    output+=$(apply_style "$mode_bg" "$THEME_MODULE_BG" "$reset" " $sep_solid")
+  fi
 
-output+=$(apply_style "$THEME_MODE_FG" "$mode_bg" "bold" " ${mode_content} ")
+  output+=$(apply_style "$THEME_MODE_FG" "$mode_bg" "bold" " ${mode_content} ")
 
   echo "$output"
 }

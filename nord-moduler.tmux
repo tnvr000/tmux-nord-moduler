@@ -10,6 +10,9 @@ source "$CURRENT_DIR/lib/constants.tmux"
 source "$CURRENT_DIR/lib/options.tmux"
 
 source "$CURRENT_DIR/lib/theme.tmux"
+source "$CURRENT_DIR/lib/theme_apply.tmux"
+
+apply_theme
 
 source "$CURRENT_DIR/lib/mode.tmux"
 source "$CURRENT_DIR/lib/renderer.tmux"
