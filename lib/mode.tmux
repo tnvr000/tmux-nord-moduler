@@ -1,21 +1,20 @@
 #!/usr/bin/env bash
-# lib/mode.tmux
 
-get_tmux_mode_format() {
+get_tmux_mode_segment() {
+  local separator_bg="$1"
+
   local is_tree="#{==:#{pane_mode},tree-mode}"
   local is_buffer="#{==:#{pane_mode},buffer-mode}"
   local is_client="#{==:#{pane_mode},client-mode}"
 
-  local pane_mode="#{?${is_tree},TREE,#{?${is_buffer},BUFFER,#{?${is_client},OPTIONS,COPY}}}"
-  local normal_mode="#{?window_zoomed_flag,ZOOM,NORMAL}"
+  # Commas inside #{?...,...,...} branches must be escaped for tmux.
+  local normal="#[fg=${THEME_MODE_NORMAL_BG}#,bg=${separator_bg}#,nobold#,nounderscore#,noitalics] #[fg=${THEME_MODE_FG}#,bg=${THEME_MODE_NORMAL_BG}#,bold] NORMAL "
+  local command="#[fg=${THEME_MODE_COMMAND_BG}#,bg=${separator_bg}#,nobold#,nounderscore#,noitalics] #[fg=${THEME_MODE_FG}#,bg=${THEME_MODE_COMMAND_BG}#,bold] COMMAND "
+  local copy="#[fg=${THEME_MODE_COPY_BG}#,bg=${separator_bg}#,nobold#,nounderscore#,noitalics] #[fg=${THEME_MODE_FG}#,bg=${THEME_MODE_COPY_BG}#,bold] COPY "
+  local tree="#[fg=${THEME_MODE_COPY_BG}#,bg=${separator_bg}#,nobold#,nounderscore#,noitalics] #[fg=${THEME_MODE_FG}#,bg=${THEME_MODE_COPY_BG}#,bold] TREE "
+  local buffer="#[fg=${THEME_MODE_OTHER_BG}#,bg=${separator_bg}#,nobold#,nounderscore#,noitalics] #[fg=${THEME_MODE_FG}#,bg=${THEME_MODE_OTHER_BG}#,bold] BUFFER "
+  local options="#[fg=${THEME_MODE_OTHER_BG}#,bg=${separator_bg}#,nobold#,nounderscore#,noitalics] #[fg=${THEME_MODE_FG}#,bg=${THEME_MODE_OTHER_BG}#,bold] OPTIONS "
+  local zoom="#[fg=${THEME_MODE_OTHER_BG}#,bg=${separator_bg}#,nobold#,nounderscore#,noitalics] #[fg=${THEME_MODE_FG}#,bg=${THEME_MODE_OTHER_BG}#,bold] ZOOM "
 
-  echo "#{?client_prefix,COMMAND,#{?pane_in_mode,${pane_mode},${normal_mode}}}"
-}
-
-get_tmux_mode_color() {
-  local is_tree="#{==:#{pane_mode},tree-mode}"
-  local is_buffer="#{==:#{pane_mode},buffer-mode}"
-  local is_client="#{==:#{pane_mode},client-mode}"
-
-  echo "#{?client_prefix,${THEME_MODE_COMMAND_BG},#{?pane_in_mode,#{?${is_tree},${THEME_MODE_COPY_BG},#{?${is_buffer},${THEME_MODE_OTHER_BG},#{?${is_client},${THEME_MODE_OTHER_BG},${THEME_MODE_COPY_BG}}}},#{?window_zoomed_flag,${THEME_MODE_OTHER_BG},${THEME_MODE_NORMAL_BG}}}}"
+  echo "#{?client_prefix,${command},#{?pane_in_mode,#{?${is_tree},${tree},#{?${is_buffer},${buffer},#{?${is_client},${options},${copy}}}},#{?window_zoomed_flag,${zoom},${normal}}}}"
 }

@@ -47,16 +47,18 @@ build_right_status() {
     fi
   done
 
-  local mode_content="$(get_tmux_mode_format)"
-  local mode_bg="$(get_tmux_mode_color)"
+  local separator_bg
 
   if [[ $total_visible -eq 0 ]]; then
-  output+=$(apply_style "$mode_bg" "default" "$reset" "$sep_solid")
-else
-  output+=$(apply_style "$mode_bg" "$THEME_MODULE_BG" "$reset" " ${sep_solid}")
-fi
+    separator_bg="$THEME_STATUS_BG"
+  else
+    separator_bg="$THEME_MODULE_BG"
+  fi
 
-output+=$(apply_style "$THEME_MODE_FG" "$mode_bg" "bold" " ${mode_content} ")
+  local mode_segment
+  mode_segment="$(get_tmux_mode_segment "$separator_bg")"
+
+  output+="$mode_segment"
 
   echo "$output"
 }
