@@ -22,7 +22,7 @@ Modules are independent components that collect and format information such as G
 * **Git integration** — Displays the current branch with staged (`+`) and dirty (`*`) indicators.
 * **System information** — CPU, RAM, battery, hostname, and user modules.
 * **Context-aware modules** — Modules such as Git automatically hide themselves when there is nothing relevant to display.
-* **Multiple themes** — Includes Nord, Oasis, and Canopy.
+* **Multiple themes** — Includes Nord, Dune, and Canopy.
 * **Extensible architecture** — Modules and data collection scripts are kept separate.
 
 ---
@@ -112,7 +112,7 @@ set -g @nord_mod_right "git directory cpu ram battery date time"
 The plugin currently includes three themes:
 
 * `nord`
-* `oasis`
+* `dune`
 * `canopy`
 
 Select a theme using `@nord_mod_theme`:
@@ -254,7 +254,7 @@ For example:
 
 ```text
 themes/nord.tmux
-themes/oasis.tmux
+themes/dune.tmux
 themes/canopy.tmux
 ```
 
