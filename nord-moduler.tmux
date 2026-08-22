@@ -11,8 +11,10 @@ source "$CURRENT_DIR/lib/options.tmux"
 
 source "$CURRENT_DIR/lib/theme.tmux"
 source "$CURRENT_DIR/lib/theme_apply.tmux"
+source "$CURRENT_DIR/lib/terminal_theme_apply.tmux"
 
 apply_theme
+apply_terminal_colors
 
 source "$CURRENT_DIR/lib/mode.tmux"
 source "$CURRENT_DIR/lib/renderer.tmux"
