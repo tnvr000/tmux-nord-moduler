@@ -16,7 +16,6 @@ apply_style() {
 
 build_right_status() {
   local -a modules_array=($NORD_RIGHT_MODULES)
-  local total_modules=${#modules_array[@]}
   local output=""
   local -a visible_modules=()
 

@@ -1,125 +1,235 @@
 # Tmux Nord Moduler
 
-A beautifully clean, modular, and highly optimized Nord theme for Tmux. 
+A modular and customizable tmux status bar with multiple themes.
 
-Built with a focus on **performance and cross-platform compatibility**, this plugin features zero-lag native tmux variables and hardware metrics that seamlessly bypass virtual machine limits to read physical host data in WSL, while elegantly falling back to native Linux commands when needed.
+Modules are independent components that collect and format information such as Git status, CPU usage, RAM usage, battery level, date, and time. You can easily choose which modules appear and in what order.
 
 ## 📸 Screenshots
 
 ![Tmux Nord Moduler Preview](./screenshots/aesthetic.png)
-*Full terminal preview showcasing the Nord aesthetic.*
+
+*Full terminal preview.*
 
 ![Status Bar Detail](./screenshots/moduler.png)
-*Detail of the hardware and git modules in action.*
+
+*Status bar modules in action.*
 
 ---
 
 ## ✨ Features
 
-*   **WSL-Optimized Hardware Metrics:** CPU and RAM modules query the Windows host natively, avoiding the "0% CPU" and capped RAM limits of the WSL virtual machine.
-*   **Zero-Lag Navigation:** Directory and window modules use native Tmux C-variables for instant updates without bash subshell overhead.
-*   **Context-Aware Git:** Real-time branch tracking with visual indicators for staged (`+`) and unstaged/dirty (`*`) changes.
-*   **Highly Modular:** Easily rearrange, add, or remove modules with a single line in your `.tmux.conf`.
+* **Modular design** — Add, remove, or reorder modules through your `.tmux.conf`.
+* **Git integration** — Displays the current branch with staged (`+`) and dirty (`*`) indicators.
+* **System information** — CPU, RAM, battery, hostname, and user modules.
+* **Context-aware modules** — Modules such as Git automatically hide themselves when there is nothing relevant to display.
+* **Multiple themes** — Includes Nord, Oasis, and Canopy.
+* **Extensible architecture** — Modules and data collection scripts are kept separate.
 
 ---
 
 ## 📦 Installation
 
-### Option 1: Tmux Plugin Manager (Recommended)
-The easiest way to install and keep the plugin updated is using [TPM](https://github.com/tmux-plugins/tpm).
+### Option 1: Tmux Plugin Manager
 
-1. Add the plugin to your `~/.tmux.conf`:
-   ```tmux
-   set -g @plugin 'tnvr000/tmux-nord-moduler'
-   ```
-2. Press `prefix` + `I` (capital I) to fetch and install the plugin.
+Add the plugin to your `~/.tmux.conf`:
+
+```tmux
+set -g @plugin 'tnvr000/tmux-nord-moduler'
+```
+
+Press `prefix` + `I` to install it.
 
 ### Option 2: Manual Installation
-If you prefer not to use a plugin manager, you can install it manually.
 
-1. Clone the repository anywhere on your machine:
-   ```bash
-   git clone https://github.com/tnvr000/tmux-nord-moduler.git ~/.tmux/plugins/tmux-nord-moduler
-   ```
-2. Source the plugin at the very bottom of your `~/.tmux.conf`:
-   ```tmux
-   run-shell ~/.tmux/plugins/tmux-nord-moduler/nord-moduler.tmux
-   ```
-3. Reload your Tmux configuration:
-   ```bash
-   tmux source ~/.tmux.conf
-   ```
+Clone the repository:
+
+```bash
+git clone https://github.com/tnvr000/tmux-nord-moduler.git ~/.tmux/plugins/tmux-nord-moduler
+```
+
+Add the following near the bottom of your `~/.tmux.conf`:
+
+```tmux
+run-shell ~/.tmux/plugins/tmux-nord-moduler/nord-moduler.tmux
+```
+
+Reload tmux:
+
+```bash
+tmux source ~/.tmux.conf
+```
 
 ---
 
-## ⚙️ Configuration
+# ⚙️ Configuration
 
-You can customize exactly which modules appear on your status bar by defining a space-separated list in your `~/.tmux.conf`. 
+## Choosing Modules
 
-### Defining Modules
+The right side of the status bar is controlled with `@nord_mod_right`.
+
+Modules are specified as a space-separated list.
 
 ```tmux
-# Default configuration
 set -g @nord_mod_right "git directory cpu ram battery date time"
 ```
 
-### Available Modules
+The order in the configuration is the order in which modules appear in the status bar.
 
-| Module Name | Description | Architecture |
-| :--- | :--- | :--- |
-| `directory` | Current working directory of the active pane. | Native (Zero-lag) |
-| `window` | Current Tmux window name. | Native (Zero-lag) |
-| `git` | Git branch with staged (`+`) and dirty (`*`) indicators. | Bash (Context-Aware) |
-| `cpu` | Total system CPU usage (WSL & Linux Native). | Bash |
-| `ram` | Physical RAM usage percentage (WSL & Linux Native). | Bash |
-| `battery` | System battery percentage (WSL & Linux Native). | Bash |
-| `date` | Current local date (`YYYY-MM-DD`). | Bash / Tmux built-in |
-| `time` | Current local time (`HH:MM`). | Bash / Tmux built-in |
-| `hostname` | Name of the current machine. | Bash |
+For example:
+
+```tmux
+set -g @nord_mod_right "user hostname git directory"
+```
+
+Modules that return no output are automatically skipped without leaving unnecessary separators.
 
 ---
 
-## 🛠️ Advanced: Adding Custom Modules
+## Available Modules
 
-Because of the plugin's data-driven architecture, you can easily add your own custom native modules directly in your `~/.tmux.conf` without editing the plugin's source code!
+| Module      | Description                                                                  |
+| ----------- | ---------------------------------------------------------------------------- |
+| `git`       | Current Git branch with staged (`+`) and dirty (`*`) indicators.             |
+| `directory` | Current working directory of the active pane.                                |
+| `cpu`       | Current CPU usage percentage.                                                |
+| `ram`       | Current RAM usage percentage.                                                |
+| `battery`   | Battery percentage and charging status. Hidden when no battery is available. |
+| `date`      | Current date.                                                                |
+| `time`      | Current time.                                                                |
+| `hostname`  | Hostname of the current machine.                                             |
+| `user`      | Current username.                                                            |
 
-Just define a bash variable with the prefix `NORD_NATIVE_` and inject your Tmux format string:
+The default configuration is:
 
 ```tmux
-# 1. Define a custom native module (e.g., 'user')
-run-shell 'export NORD_NATIVE_user=" #(whoami)"'
-
-# 2. Add it to your module list!
-set -g @nord_mod_right "user directory git"
+set -g @nord_mod_right "git directory cpu ram battery date time"
 ```
 
-## 🛠️ Extension: Module Contract
+---
 
-scripts/\<name>.sh
------------------
-- Collect data only.
-- Return plain text.
-- No icons.
-- No colors.
-- No tmux formatting.
-- Return empty output if there is nothing to display.
+# 🎨 Themes
 
-modules/\<name>.tmux
--------------------
-- Source the corresponding script.
-- Decide whether to display.
-- Add icons.
-- Format the output.
-- Never collect system information directly.
+The plugin currently includes three themes:
 
-## Theme contract
---------------
+* `nord`
+* `oasis`
+* `canopy`
 
-Every theme must define:
+Select a theme using `@nord_mod_theme`:
 
+```tmux
+set -g @nord_mod_theme "canopy"
+```
+
+If no theme is configured, the plugin uses `nord`.
+
+```tmux
+set -g @nord_mod_theme "nord"
+```
+
+If an invalid theme name is provided, the plugin falls back to Nord.
+
+---
+
+# 🛠️ Creating Custom Modules
+
+Each module consists of two layers:
+
+```text
+scripts/<name>.sh
+        ↓
+modules/<name>.tmux
+        ↓
+dispatcher.sh
+        ↓
+status bar
+```
+
+The script is responsible for collecting data.
+
+The module is responsible for deciding how that data should be displayed.
+
+For example:
+
+```text
+scripts/weather.sh
+modules/weather.tmux
+```
+
+Then add the module to your configuration:
+
+```tmux
+set -g @nord_mod_right "git weather cpu time"
+```
+
+## Script Contract
+
+`scripts/<name>.sh`
+
+Scripts should:
+
+* Collect data only.
+* Return plain text.
+* Avoid icons and colors.
+* Avoid tmux formatting.
+* Return empty output when there is nothing to display.
+
+Example:
+
+```bash
+#!/usr/bin/env bash
+
+echo "24°C"
+```
+
+## Module Contract
+
+`modules/<name>.tmux`
+
+A module should:
+
+* Define a function named `module_<name>`.
+* Call the corresponding script when necessary.
+* Decide whether the module should be displayed.
+* Add icons and presentation formatting.
+* Avoid directly collecting system information.
+
+Example:
+
+```bash
+#!/usr/bin/env bash
+
+module_weather() {
+  local weather
+
+  weather="$("$SCRIPTS_DIR/weather.sh")"
+
+  [[ -z "$weather" ]] && return
+
+  echo "󰖨  $weather"
+}
+```
+
+The module name and function name must match:
+
+```text
+modules/weather.tmux
+module_weather()
+```
+
+---
+
+# 🎨 Theme Contract
+
+Every theme file must define the colors used by the status bar.
+
+At minimum:
+
+```bash
 THEME_NAME
 
 THEME_BASE_BG
+THEME_STATUS_BG
 
 THEME_MODULE_BG
 THEME_MODULE_FG
@@ -132,9 +242,25 @@ THEME_MODE_NORMAL_BG
 THEME_MODE_COMMAND_BG
 THEME_MODE_COPY_BG
 THEME_MODE_OTHER_BG
+```
 
---------------
+Theme files are stored in:
 
-## 📝 Requirements
-* Tmux 2.9 or higher.
+```text
+themes/
+```
+
+For example:
+
+```text
+themes/nord.tmux
+themes/oasis.tmux
+themes/canopy.tmux
+```
+
+---
+
+# 📝 Requirements
+
+* tmux 2.9 or later.
 * A patched [Nerd Font](https://www.nerdfonts.com/) for icons to render correctly.
